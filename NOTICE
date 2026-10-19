@@ -1,0 +1,7 @@
+claude-rc/spec.yaml is derived from claude/spec.yaml in
+https://github.com/docker/sbx-kits-contrib (Copyright Docker, Inc.),
+licensed under the Apache License, Version 2.0.
+
+Modifications: the kit is renamed to claude-rc, its displayName and
+description are changed, and its top-level `credentials:` block is removed.
+The exact upstream commit is recorded in claude-rc/UPSTREAM_SHA.

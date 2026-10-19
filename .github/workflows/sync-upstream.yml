@@ -1,0 +1,31 @@
+name: Sync from upstream claude kit
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"   # Mondays 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Regenerate claude-rc/spec.yaml
+        run: ./scripts/sync-upstream.sh
+
+      - name: Open PR if changed
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: sync-upstream
+          commit-message: "Sync claude-rc with upstream claude kit"
+          title: "Sync claude-rc with upstream claude kit"
+          body: |
+            Regenerated `claude-rc/spec.yaml` from docker/sbx-kits-contrib `claude/spec.yaml`
+            (commit in `claude-rc/UPSTREAM_SHA`). Review the diff, especially network
+            allow-list and setup hooks, before merging.
+          delete-branch: true
